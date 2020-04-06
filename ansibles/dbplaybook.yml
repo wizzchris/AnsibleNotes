@@ -1,0 +1,68 @@
+---
+- hosts: Data_Bases
+  become: yes
+  tasks:
+
+  - name: Update Apt and Upgrade Apt
+    apt:
+      update_cache: yes
+      upgrade: dist
+
+  - name: install git
+    apt:
+      name: git
+
+  - name: mongo install key
+    apt_key:
+      url: https://www.mongodb.org/static/pgp/server-4.2.asc
+      state: present
+
+  - name: get update
+    apt:
+      upgrade: yes
+      update_cache: yes
+
+  - name: MongoDB - Add repository
+    apt_repository:
+      filename: '/etc/apt/sources.list.d/mongodb-org-4.2.list'
+      repo: 'deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.2 multiverse'
+      state: present
+      update_cache: yes
+
+  - name: MongoDB - Install MongoDB
+    apt:
+      name: mongodb-org
+      state: present
+      update_cache: yes
+
+  - name: Copy mongodb file
+    copy:
+      src: /home/ubuntu/ansibles/mongod.conf
+      dest: /home/ubuntu/mongod.conf
+
+  - name: rm config of db
+    shell: rm /etc/mongod.conf
+
+  - name: change location of config
+    shell: ln -s /home/ubuntu/mongod.conf /etc/mongod.conf
+
+  - name: start MongoDB
+    shell: systemctl start mongod
+
+  - name: restart MongoDB
+    shell: systemctl restart mongod; systemctl enable mongod
+
+- hosts: node6
+  become: yes
+  tasks:
+
+  - name: Add ip to host
+    shell: echo '10.0.10.16' >> /etc/hosts
+
+  - name: Initiate replica set
+    mongodb_replicaset:
+      replica_set: rs0
+      members:
+        - 10.0.11.16:27017
+        - 10.0.11.14:27017
+        - 10.0.11.15:27017

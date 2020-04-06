@@ -1,0 +1,42 @@
+---
+- hosts: Apps
+  become: yes
+  tasks:
+
+  - name: Update Apt and Upgrade Apt
+    apt:
+      update_cache: yes
+      upgrade: dist
+
+  - name: Install git
+    apt:
+      name: git
+
+  - name: Retrieve app repository
+    git:
+      repo: 'https://github.com/wizzchris/AppFolder.git'
+      dest: /home/ubuntu/App
+
+  - name: Install the gpg key for nodejs LTS
+    apt_key:
+      url: "https://deb.nodesource.com/gpgkey/nodesource.gpg.key"
+
+  - name: install software properties common
+    shell: apt-get install software-properties-common -y
+
+  - name: Install the nodejs LTS repos
+    apt_repository:
+      repo: "deb https://deb.nodesource.com/node_12.x xenial main"
+
+  - name: Install the nodejs
+    apt:
+      name: nodejs
+
+  - name: install pm2
+    npm:
+      name: pm2
+      global: yes
+
+  - name: install nginx
+    apt:
+      name: nginx

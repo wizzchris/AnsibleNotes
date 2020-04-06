@@ -1,0 +1,22 @@
+---
+- hosts: node1
+  become: yes
+  tasks:
+
+  - name: Update Apt and Upgrade Apt
+    apt:
+      update_cache: yes
+      upgrade: dist
+
+  - name: Install Java
+    apt:
+      name: default-jre
+
+  - name: Copy private key to keys
+    copy:
+      src: /home/ubuntu/key/id_rsa
+      dest: /home/ubuntu/.ssh/id_rsa
+      mode: 0700
+
+  - name: Change inventory file
+    shell: 'cat /home/ubuntu/ansibles/inventory.yml > /etc/ansible/hosts'
