@@ -12,6 +12,10 @@
     apt:
       name: git
 
+  - name: install python3
+    apt:
+      name: python3-pip
+
   - name: mongo install key
     apt_key:
       url: https://www.mongodb.org/static/pgp/server-4.2.asc
@@ -37,14 +41,14 @@
 
   - name: Copy mongodb file
     copy:
-      src: /home/ubuntu/ansibles/mongod.conf
-      dest: /home/ubuntu/mongod.conf
+      src: /home/vagrant/ansibles/mongod.conf
+      dest: /home/vagrant/mongod.conf
 
   - name: rm config of db
     shell: rm /etc/mongod.conf
 
   - name: change location of config
-    shell: ln -s /home/ubuntu/mongod.conf /etc/mongod.conf
+    shell: ln -s /home/vagrant/mongod.conf /etc/mongod.conf
 
   - name: start MongoDB
     shell: systemctl start mongod
@@ -56,6 +60,10 @@
   become: yes
   tasks:
 
+  - name: python mod
+    pip:
+      name: pymongo
+
   - name: Add ip to host
     shell: echo '10.0.10.16' >> /etc/hosts
 
@@ -63,6 +71,6 @@
     mongodb_replicaset:
       replica_set: rs0
       members:
-        - 10.0.11.16:27017
-        - 10.0.11.14:27017
-        - 10.0.11.15:27017
+        - 10.0.10.16:27017
+        - 10.0.10.14:27017
+        - 10.0.10.15:27017

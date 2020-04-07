@@ -14,9 +14,9 @@
 
   - name: Copy private key to keys
     copy:
-      src: /home/ubuntu/key/id_rsa
-      dest: /home/ubuntu/.ssh/id_rsa
-      mode: 0700
+      src: /home/vagrant/key/id_rsa
+      dest: /home/vagrant/.ssh/id_rsa
+      mode: 0777
 
   - name: Change inventory file
-    shell: 'cat /home/ubuntu/ansibles/inventory.yml > /etc/ansible/hosts'
+    shell: 'cat /home/vagrant/ansibles/inventory.yml > /etc/ansible/hosts'
