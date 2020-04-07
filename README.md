@@ -26,3 +26,9 @@ The files are:
 - vagrantfile = the vagrant file for vagrant up
 
 ### Ansibles
+This section will go through the files in the ansibles file.
+- appplaybook.yml = the playbook for the app nodes
+- dbplaybook.yml = the playbook for the database nodes
+- inventory.yml = the hosts file for ansible. It uses this file to find locations on the nodes
+- mongod.conf = the configuration file for mongo db
+- playbook.yml = the playbook for the host node 
