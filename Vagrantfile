@@ -2,7 +2,7 @@ required_plugins = ["vagrant-hostsupdater"] #This ensurs we can change the name 
 required_plugins.each do |plugin|
     exec "vagrant plugin install #{plugin}" unless Vagrant.has_plugin? plugin
 end
-nodes = ["2","3","4", "5","6"] #This is the names of the nodes you want
+nodes = ["2","3","4", "5","6","7"] #This is the names of the nodes you want
 Vagrant.configure("2") do |config|
 
   config.vm.define "node1" do |node1|

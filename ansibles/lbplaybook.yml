@@ -1,5 +1,5 @@
 ---
-- hosts: Apps
+- hosts: node7
   become: yes
   tasks:
 
@@ -11,11 +11,6 @@
   - name: Install git
     apt:
       name: git
-
-  - name: Retrieve app repository
-    git:
-      repo: 'https://github.com/wizzchris/AppFolder.git'
-      dest: /home/vagrant/App
 
   - name: Install the gpg key for nodejs LTS
     apt_key:
@@ -41,11 +36,13 @@
     apt:
       name: nginx
 
-  - name: Add variable
-    shell: echo "export DB_HOST=mongodb://10.0.10.14:27017,10.0.10.15:27017,10.0.10.16:27017/posts?replicaSet=rs0" >> /home/vagrant/.bashrc
+  - name: adding nginx conf file
+    copy:
+      src: /home/vagrant/ansibles/nginxconf.conf
+      dest: /home/vagrant/nginxconf.conf
 
-- hosts: node2
-  become: yes
-  tasks:
-  - name: Seed database
-    shell: 'node /home/vagrant/App/app/seeds/seed.js'
+  - name: Change configuration file
+    shell: 'cat /home/vagrant/nginxconf.conf > /etc/nginx/nginx.conf'
+
+  - name: restart Nginx
+    shell: systemctl restart nginx

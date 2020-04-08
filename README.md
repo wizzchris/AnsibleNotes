@@ -14,9 +14,21 @@ Run these comands to provision the databases and app
 cd ansibles
 ansible-playbook dbplaybook.yml
 ansible-playbook appplaybook.yml
+ansible-playbook lbplaybook.yml
 ````
 
-The database will create a database replication server.
+The database will create a database replication server as well as a load balancer.
+To see the app you will need to log into one of the apps and seed the database. To do this run these commands
+````
+cd App/app
+node seeds/seed.js
+````
+You will then need to log into both apps and run these commands
+````
+cd App/app
+npm start &
+````
+You can then log into the ip of the load balancer and see the app with the posts page
 ## Files
 The files are:
 - ansibles = file used for synching
@@ -31,4 +43,4 @@ This section will go through the files in the ansibles file.
 - dbplaybook.yml = the playbook for the database nodes
 - inventory.yml = the hosts file for ansible. It uses this file to find locations on the nodes
 - mongod.conf = the configuration file for mongo db
-- playbook.yml = the playbook for the host node 
+- playbook.yml = the playbook for the host node

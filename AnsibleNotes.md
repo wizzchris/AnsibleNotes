@@ -84,9 +84,33 @@ commands to include multiple playbooks.
 
 You can use become to change the user.
 
-The playbook for the example in this repository is:
+The playbook for the ansible host node in this repository is:
 ````
+---
+- hosts: node1
+  become: yes
+  tasks:
+
+  - name: Update Apt and Upgrade Apt
+    apt:
+      update_cache: yes
+      upgrade: dist
+
+  - name: Install Java
+    apt:
+      name: default-jre
+
+  - name: Copy private key to keys
+    copy:
+      src: /home/vagrant/key/id_rsa
+      dest: /home/vagrant/.ssh/id_rsa
+      mode: 0777
+
+  - name: Change inventory file
+    shell: 'cat /home/vagrant/ansibles/inventory.yml > /etc/ansible/hosts'
+
 ````
+To see the apps, database and loadbalacners playbook please click on the playbooks in the ansibles file.
 
 ### Inventory
 To make an inventory we can either make a new one in /etc/ansible/ as a hosts file. Then add the ip addresses. This can be done either via YMAL or INI.
@@ -96,6 +120,38 @@ Ansible communicates over SSH so ensure that the public key is added to the auth
 You can add group names by using square brackets or by specifying new group in YAML. You can add the same host in multiple groups and even add a group to a new group.
 The inventory file in this vagrant file is this:
 ````
+all:
+  hosts:
+    node1:
+      ansible_connection: local
+  children:
+    Apps:
+      hosts:
+        node2:
+          ansible_host: 10.0.10.12
+        node3:
+          ansible_host: 10.0.10.13
+    Data_Bases:
+      hosts:
+        node4:
+          ansible_host: 10.0.10.14
+        node5:
+          ansible_host: 10.0.10.15
+        node6:
+          ansible_host: 10.0.10.16
+    Load_Balancer:
+      hosts:
+        node7:
+          ansible_host: 10.0.10.17
+  vars:
+    ansible_connection: ssh
+    ansible_host: vagrant
+    ansible_user: vagrant
+    ansible_ssh_private_key_file: /home/vagrant/.ssh/id_rsa
+    host_key_checking: False
+    ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+    ansible_python_interpreter: /usr/bin/python3
+
 ````
 
 You can also add variables to each host by adding a vars section to the hosts file. This allows multiple variables added to the connection line to multiple hosts.

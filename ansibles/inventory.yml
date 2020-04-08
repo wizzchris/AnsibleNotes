@@ -17,6 +17,10 @@ all:
           ansible_host: 10.0.10.15
         node6:
           ansible_host: 10.0.10.16
+    Load_Balancer:
+      hosts:
+        node7:
+          ansible_host: 10.0.10.17
   vars:
     ansible_connection: ssh
     ansible_host: vagrant
