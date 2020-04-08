@@ -1,0 +1,62 @@
+---
+- hosts: Data_Bases:Apps
+  become: yes
+  tasks:
+
+  - name: Install the gpg key for metic
+    apt_key:
+      url: "https://artifacts.elastic.co/GPG-KEY-elasticsearch"
+
+  - name: download apt transport
+    apt:
+      name: apt-transport-https
+
+  - name: Install the meticbeat repository
+    apt_repository:
+      repo: "deb https://artifacts.elastic.co/packages/7.x/apt stable main"
+
+
+  - name: Update Apt
+    apt:
+      update_cache: yes
+
+  - name: download metricbeat
+    apt:
+      name: metricbeat
+
+  - name: enable modules
+    shell: 'metricbeat modules enable system'
+
+  - name: download filebeat
+    apt:
+      name: filebeat
+
+  - name: enable modules
+    shell: 'sudo filebeat modules enable system'
+
+  - name: copy metricbeat file
+    copy:
+      src: /home/vagrant/ansibles/metricbeat.yml
+      dest: etc/metricbeat/metricbeat.yml
+      mode: 0777
+
+  - name: copy filebeat file
+    copy:
+      src: /home/vagrant/ansibles/filebeat.yml
+      dest: etc/filebeat/filebeat.yml
+      mode: 0777
+
+  - name: enable modules
+    shell: 'sudo filebeat modules enable nginx'
+
+  - name: start metricbeat
+    systemd:
+      name: metricbeat
+      state: reloaded
+      enabled: yes
+
+  - name: start filebeat
+    systemd:
+      name: filebeat
+      state: reloaded
+      enabled: yes

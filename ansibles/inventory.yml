@@ -21,6 +21,14 @@ all:
       hosts:
         node7:
           ansible_host: 10.0.10.17
+    ELK:
+      hosts:
+        elst:
+          ansible_host:
+        kibana:
+          ansible_host:
+        logstash:
+          ansible_host:
   vars:
     ansible_connection: ssh
     ansible_host: vagrant

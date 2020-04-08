@@ -43,9 +43,3 @@
 
   - name: Add variable
     shell: echo "export DB_HOST=mongodb://10.0.10.14:27017,10.0.10.15:27017,10.0.10.16:27017/posts?replicaSet=rs0" >> /home/vagrant/.bashrc
-
-- hosts: node2
-  become: yes
-  tasks:
-  - name: Seed database
-    shell: 'node /home/vagrant/App/app/seeds/seed.js'
