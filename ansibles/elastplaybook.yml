@@ -1,0 +1,45 @@
+---
+- hosts: elst
+  become: yes
+  tasks:
+
+  - name: Update Apt and Upgrade Apt
+    apt:
+      update_cache: yes
+      upgrade: dist
+
+  - name: Install Java jdk
+    apt:
+      name: openjdk-8-jdk
+
+  - name: Install the gpg key for metic
+    apt_key:
+      url: "https://artifacts.elastic.co/GPG-KEY-elasticsearch"
+
+  - name: download apt transport
+    apt:
+      name: apt-transport-https
+
+  - name: Install the meticbeat repository
+    apt_repository:
+      repo: "deb https://artifacts.elastic.co/packages/7.x/apt stable main"
+
+  - name: Update Apt
+    apt:
+      update_cache: yes
+
+  - name: download elasticsearch
+    apt:
+      name: elasticsearch
+
+  - name: copy elasticsearch file
+    copy:
+      src: /home/vagrant/ansibles/elasticsearch.yml
+      dest: /etc/elasticsearch/elasticsearch.yml
+      mode: 0777
+
+  - name: start elasticsearch
+    systemd:
+      name: elasticsearch
+      state: reloaded
+      enabled: yes

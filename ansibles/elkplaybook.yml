@@ -37,14 +37,14 @@
   - name: copy metricbeat file
     copy:
       src: /home/vagrant/ansibles/metricbeat.yml
-      dest: etc/metricbeat/metricbeat.yml
-      mode: 0777
+      dest: /etc/metricbeat/metricbeat.yml
+      mode: 0700
 
   - name: copy filebeat file
     copy:
       src: /home/vagrant/ansibles/filebeat.yml
-      dest: etc/filebeat/filebeat.yml
-      mode: 0777
+      dest: /etc/filebeat/filebeat.yml
+      mode: 0700
 
   - name: enable modules
     shell: 'sudo filebeat modules enable nginx'

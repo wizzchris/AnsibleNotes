@@ -48,3 +48,15 @@ This section will go through the files in the ansibles file.
 - inventory.yml = the hosts file for ansible. It uses this file to find locations on the nodes
 - mongod.conf = the configuration file for mongo db
 - playbook.yml = the playbook for the host node
+- masterplaybook.yml = playbook that runs through the other playbooks to set up servers
+- elasticsearch.yml = configuration for elasticsearch
+- elastplaybook.yml = playbook to set up an elasticsearch node
+- elkplaybook.yml = playbook to run on the app and db to set up the elk
+- ELKStackNotes.md = notes for ELK stack
+- filebeat.yml = configuration for filebeat on each of the app and db nodes
+- kibana.yml = configuration for kibana node
+- kibanaplaybook.yml = playbook to set up a kibana node
+- logstash.conf = configuration for logstash
+- logstashplaybook.yml = playbook to set up a logstash node
+- metricbeat.yml = configuration for beats on each of the app and db nodes
+- nginxconf.conf = configuration to set up the load balancer

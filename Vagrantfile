@@ -3,8 +3,12 @@ required_plugins.each do |plugin|
     exec "vagrant plugin install #{plugin}" unless Vagrant.has_plugin? plugin
 end
 nodes = ["2","3","4", "5","6","7","8","9","10"] #This is the names of the nodes you want
-Vagrant.configure("2") do |config|
 
+Vagrant.configure("2") do |config|
+  config.vm.provider "virtualbox" do |v|
+    v.memory = 1524
+    v.cpus = 2
+  end
   config.vm.define "node1" do |node1|
     node1.vm.box = "ubuntu/bionic64"
     node1.vm.network "private_network", ip: "10.0.10.11"

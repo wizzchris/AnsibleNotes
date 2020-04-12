@@ -24,11 +24,11 @@ all:
     ELK:
       hosts:
         elst:
-          ansible_host:
+          ansible_host: 10.0.10.110
         kibana:
-          ansible_host:
+          ansible_host: 10.0.10.18
         logstash:
-          ansible_host:
+          ansible_host: 10.0.10.19
   vars:
     ansible_connection: ssh
     ansible_host: vagrant
