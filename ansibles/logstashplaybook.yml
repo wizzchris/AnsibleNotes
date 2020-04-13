@@ -36,7 +36,7 @@
     copy:
       src: /home/vagrant/ansibles/logstash.conf
       dest: /etc/logstash/conf.d/logstash.conf
-      mode: 0700
+      mode: 0777
 
   - name: start logstash
     systemd:

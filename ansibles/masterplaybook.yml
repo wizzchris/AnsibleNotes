@@ -1,8 +1,8 @@
 ---
-- import_playbook: dbplaybook.yml
-- import_playbook: appplaybook.yml
-- import_playbook: lbplaybook.yml
-- import_playbook: elkplaybook.yml
 - import_playbook: elastplaybook.yml
 - import_playbook: kibanaplaybook.yml
 - import_playbook: logstashplaybook.yml
+- import_playbook: elkplaybook.yml
+- import_playbook: dbplaybook.yml
+- import_playbook: appplaybook.yml
+- import_playbook: lbplaybook.yml

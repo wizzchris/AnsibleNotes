@@ -1,4 +1,4 @@
-intersection# Ansible Notes
+# Ansible Notes
 ## **Introduction**
 In this repository I go over the configuration tool Ansible and the different commands available to it.
 I also go over examples with Ansible provisioning an ubuntu 18 environment.

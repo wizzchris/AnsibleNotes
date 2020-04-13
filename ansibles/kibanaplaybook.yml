@@ -36,7 +36,7 @@
     copy:
       src: /home/vagrant/ansibles/kibana.yml
       dest: /etc/kibana/kibana.yml
-      mode: 0700
+      mode: 0777
 
   - name: start kibana
     systemd:

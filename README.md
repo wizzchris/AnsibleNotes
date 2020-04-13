@@ -12,6 +12,10 @@ This will log you into node1 which is the host node.
 Run these commands to provision the databases and app
 ````
 cd ansibles
+ansible-playbook elastplaybook.yml
+ansible-playbook kibanaplaybook.yml
+ansible-playbook logstashplaybook.yml
+ansible-playbook elkplaybook.yml
 ansible-playbook dbplaybook.yml
 ansible-playbook appplaybook.yml
 ansible-playbook lbplaybook.yml
@@ -39,6 +43,7 @@ The files are:
 
 - key_pub = is the public key added to each of the nodes
 - AnsiblesNotes = are my notes on ansible
+- ELKStackNodes = are my notes on ELK stack 
 - vagrantfile = the vagrant file for vagrant up
 
 ### Ansibles
@@ -52,7 +57,6 @@ This section will go through the files in the ansibles file.
 - elasticsearch.yml = configuration for elasticsearch
 - elastplaybook.yml = playbook to set up an elasticsearch node
 - elkplaybook.yml = playbook to run on the app and db to set up the elk
-- ELKStackNotes.md = notes for ELK stack
 - filebeat.yml = configuration for filebeat on each of the app and db nodes
 - kibana.yml = configuration for kibana node
 - kibanaplaybook.yml = playbook to set up a kibana node
